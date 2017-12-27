@@ -1,0 +1,22 @@
+{
+    "name": "samuelsonbrito/timecard",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Samuelson Brito",
+            "email": "samuelsonma@hotmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~6.0"
+    },    
+    "autoload": {
+        "psr-4":{
+            "TimeCard\\":"src"
+        }
+    }
+}
