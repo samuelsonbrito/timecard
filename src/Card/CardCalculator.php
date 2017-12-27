@@ -4,8 +4,8 @@ namespace TimeCard\Card;
 
 use \DateTime;
 
-class CardCalculator
-{
+class CardCalculator{
+
 	private $schedules;
 	private $tolerance;
 	private $hour1;
@@ -13,13 +13,12 @@ class CardCalculator
 	private $hour3;
 	private $hour4;
 
-    public function __construct($hour1=null,$hour2=null,$hour3=null,$hour4=null)
-    {
-    	$this->tolerance = 5;
-        $this->hour1 = is_null($hour1) ? null : new DateTime($hour1);
-        $this->hour2 = is_null($hour2) ? null : new DateTime($hour2);
-        $this->hour3 = is_null($hour3) ? null : new DateTime($hour3);
-        $this->hour4 = is_null($hour4) ? null : new DateTime($hour4);
+    public function __construct(array $hours, $tolerance = null){
+    	$this->tolerance = is_null($tolerance) ? 5 : $tolerance;
+        $this->hour1 = is_null($hours[0]) ? null : new DateTime($hours[0]);
+        $this->hour2 = is_null($hours[1]) ? null : new DateTime($hours[1]);
+        $this->hour3 = is_null($hours[2]) ? null : new DateTime($hours[2]);
+        $this->hour4 = is_null($hours[3]) ? null : new DateTime($hours[3]);
     }
 
     public function setSchedules($schedules){
@@ -50,7 +49,7 @@ class CardCalculator
     /*
     * dividindo extras em partes para depois unir no overtime()
 	*/
-	
+
 	public function overtimeHour2(){
 
     	if($this->hour2 > ($this->tolerancePlus($this->schedules->getHour2()))){
