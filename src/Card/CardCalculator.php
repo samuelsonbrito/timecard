@@ -14,7 +14,7 @@ class CardCalculator{
 	private $hour4;
 
     public function __construct(array $hours, $tolerance = null){
-    	$this->tolerance = is_null($tolerance) ? 5 : $tolerance;
+    	$this->tolerance = is_int($tolerance) ? 5 : $tolerance;
         $this->hour1 = is_null($hours[0]) ? null : new DateTime($hours[0]);
         $this->hour2 = is_null($hours[1]) ? null : new DateTime($hours[1]);
         $this->hour3 = is_null($hours[2]) ? null : new DateTime($hours[2]);
@@ -56,6 +56,11 @@ class CardCalculator{
 
     		$interval = $this->hour2->diff($this->schedules->getHour2());
 
+    		$e = new DateTime('00:00');
+			$f = clone $e;
+			$e->add($interval1);
+			$e->add($interval2);
+
     		return $interval->format("%H:%I:%S");
     	}
     }
@@ -71,15 +76,30 @@ class CardCalculator{
     }
 
     /*
+    * Período de intervalo - coletando extras de cada intervalo de forma dinâmica
+    */
+    public function overtimeInterval1(){
+    	$hoursInterval = $this->schedules->getHour2()->diff($this->schedules->getHour3());
+    	//$hoursIntervalTolerance = $this->toleranceLess($hoursInterval);
+    	return $hoursInterval->format("%H:%I:%S");
+    }
+
+    /*
     * metodos auxiliares para tolerância
     */
     private function tolerancePlus($hour){
-    	$dateTime = clone $hour;
-    	return $dateTime->modify("+{$this->tolerance} minutes");
+    	
+    	$tolerance = (strlen($this->tolerance) == 8) || (strlen($this->tolerance) == 6)  ? (int) substr($this->tolerance,4,1) : (strlen($this->tolerance) == 1) ? (int) $this->tolerance : 0;
+
+	    $dateTime = clone $hour;
+	    return $dateTime->modify("+{$tolerance} minutes");
+
     }
 
     private function toleranceLess($hour){
-    	$dateTime = clone $hour;
-    	return $dateTime->modify("-{$this->tolerance} minutes");
+    	$tolerance = (strlen($this->tolerance) == 8) || (strlen($this->tolerance) == 6)  ? (int) substr($this->tolerance,4,1) : (strlen($this->tolerance) == 1) ? (int) $this->tolerance : 0;
+
+	    	$dateTime = clone $hour;
+	    	return $dateTime->modify("-{$this->tolerance} minutes");
     }
 }
