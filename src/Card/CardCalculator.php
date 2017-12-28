@@ -86,7 +86,7 @@ class CardCalculator{
 
     	if(strtotime($hoursIntervalRegister->format("%H:%I:%S")) < strtotime($hoursIntervalTolerance)){
 
-    	return Time::diffTimes($hoursIntervalRegister->format("%H:%I:%S"),$hoursIntervalTolerance);
+    	return Time::diffTimes($hoursIntervalRegister->format("%H:%I:%S"),$hoursInterval->format("%H:%I:%S"));
     	}
 
     }
