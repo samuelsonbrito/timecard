@@ -94,6 +94,17 @@ class Time {
         return $trabalhadas;
     }
 
+    public static function diffTimes($hora1, $hora2) {
+
+        $data1 = date('Y-m-d');
+
+        $datetime1 = date_create("$data1 $hora1");
+        $datetime2 = date_create("$data1 $hora2");
+        $interval = date_diff($datetime1, $datetime2);
+
+        return $interval->format("%H:%I:%S");
+    }
+
     public static function diffTime($data1, $hora1, $hora2) {
 
         $data2 = null;
@@ -222,7 +233,7 @@ class Time {
             $pontos[4] = $datetime4;
         endif;
 
-//        var_dump(!empty($pontos));
+
 
         return !empty($pontos);
     }
@@ -311,7 +322,7 @@ class Time {
         if ($datetime6 > $datetimelei):
             $pontos[6] = $datetime6;
         endif;
-        
+
         return !empty($pontos);
     }
 
@@ -355,7 +366,6 @@ class Time {
         endif;
 
 
-//        var_dump(!empty($pontos));
 
         return !empty($pontos);
     }
@@ -434,7 +444,7 @@ class Time {
 
         $pontos[6] = $datetime6;
 
-//        var_dump($pontos1->format('Y-m-d H:i:s'));
+
 
         return $pontos[$ponto]->format('Y-m-d H:i:s');
     }
@@ -517,8 +527,6 @@ class Time {
 //        if ($datetime3 > $datetimelei):
 //            $pontos[3] = $datetime3;
 //        endif;
-//        var_dump($datetime4,$datetimelei);
-//        var_dump($pontos);
 
         return $pontos;
     }
@@ -1188,9 +1196,7 @@ class Time {
         $interval = date_diff($pontos[1], $pontos[2]);
 
         $interval2 = date_diff($pontos[3], $pontos[4]);
-//        var_dump($pontos[3]->format("Y-m-d H:i:s"),$pontos[4]->format("Y-m-d H:i:s"), $interval2->format("%H:%I:%S"));
-//        var_dump($interval->format("%H:%I:%S"),$interval2->format("%H:%I:%S"));Y-m-d H:i:s
-//        $hrNot = Time::horasEmMinutos($interval2->format("H:i:s"));
+
 
         return $interval2->format("%H:%I:%S");
     }
@@ -1367,6 +1373,7 @@ class Time {
     }
 
     public static function subHoras($hora1, $hora2, $hora3 = null, $hora4 = null) {
+
         $total = self::horasEmSegundos($hora1) - self::horasEmSegundos($hora2) - self::horasEmSegundos($hora3) - self::horasEmSegundos($hora4);
         return self::formatSegHr($total);
     }

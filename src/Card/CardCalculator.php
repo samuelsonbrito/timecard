@@ -3,6 +3,7 @@
 namespace TimeCard\Card;
 
 use \DateTime;
+use TimeCard\Time\Time;
 
 class CardCalculator{
 
@@ -80,8 +81,14 @@ class CardCalculator{
     */
     public function overtimeInterval1(){
     	$hoursInterval = $this->schedules->getHour2()->diff($this->schedules->getHour3());
-    	//$hoursIntervalTolerance = $this->toleranceLess($hoursInterval);
-    	return $hoursInterval->format("%H:%I:%S");
+    	$hoursIntervalTolerance = Time::subHoras($hoursInterval->format("%H:%I:%S"),$this->tolerance);
+    	$hoursIntervalRegister = $this->hour2->diff($this->hour3);
+
+    	if(strtotime($hoursIntervalRegister->format("%H:%I:%S")) < strtotime($hoursIntervalTolerance)){
+
+    	return Time::diffTimes($hoursIntervalRegister->format("%H:%I:%S"),$hoursIntervalTolerance);
+    	}
+
     }
 
     /*
