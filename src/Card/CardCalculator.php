@@ -5,8 +5,11 @@ namespace TimeCard\Card;
 use \DateTime;
 use TimeCard\Time\Time;
 use TimeCard\Utils\CardUtil;
+use TimeCard\Card\CardTrait;
 
 class CardCalculator{
+
+    use CardTrait;
 
 	private $schedules;
 	private $tolerance;
@@ -140,25 +143,7 @@ class CardCalculator{
 
     }
 
-    /**
-    * metodos auxiliares para tolerância
-    */
-    private function tolerancePlus($hour){
-
-    	$tolerance = CardUtil::getMinInt($this->tolerance);
-
-	    $dateTime = clone $hour;
-
-	    return $dateTime->modify("+{$tolerance} minutes");
-
-    }
-
-    private function toleranceLess($hour){
-
-    	$tolerance = CardUtil::getMinInt($this->tolerance);
-
-	    $dateTime = clone $hour;
-
-        return $dateTime->modify("-{$tolerance} minutes");
+    public function getTolerance(){
+        return $this->tolerance;
     }
 }
