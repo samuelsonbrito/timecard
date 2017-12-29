@@ -119,7 +119,7 @@ class CardCalculator{
     */
     public function overdueInterval1(){
         $hoursInterval = $this->schedules->getHour2()->diff($this->schedules->getHour3());
-        $hoursIntervalTolerance = Time::sumHoras($hoursInterval->format("%H:%I:%S"),$this->tolerance);
+        $hoursIntervalTolerance = Time::sum($hoursInterval->format("%H:%I:%S"),$this->tolerance);
         $hoursIntervalRegister = $this->hour2->diff($this->hour3);
 
         if(strtotime($hoursIntervalRegister->format("%H:%I:%S")) > strtotime($hoursIntervalTolerance)){

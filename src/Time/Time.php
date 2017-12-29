@@ -1283,14 +1283,8 @@ class Time {
         return self::formatSecInHr($horasTrabalhadas);
     }
 
-    public static function sumHoras($hora1, $hora2, $hora3 = null, $hora4 = null, $hora5 = null) {
-        $total = self::hoursInSeconds($hora1) + self::hoursInSeconds($hora2) + self::hoursInSeconds($hora3) + self::hoursInSeconds($hora4) + self::hoursInSeconds($hora5);
-        return self::formatSecInHr($total);
-    }
-
-    public static function subHoras($hora1, $hora2, $hora3 = null, $hora4 = null) {
-
-        $total = self::hoursInSeconds($hora1) - self::hoursInSeconds($hora2) - self::hoursInSeconds($hora3) - self::hoursInSeconds($hora4);
+    public static function sum($hour1, $hour2, $hour3 = null, $hour4 = null, $hour5 = null) {
+        $total = self::hoursInSeconds($hour1) + self::hoursInSeconds($hour2) + self::hoursInSeconds($hour3) + self::hoursInSeconds($hour4) + self::hoursInSeconds($hour5);
         return self::formatSecInHr($total);
     }
 
@@ -1298,11 +1292,6 @@ class Time {
 
         $total = self::hoursInSeconds($hour1) - self::hoursInSeconds($hour2) - self::hoursInSeconds($hour3) - self::hoursInSeconds($hour4);
         return self::formatSecInHr($total);
-    }    
-
-    public static function subHorasInSeg($hora1, $hora2, $hora3 = null, $hora4 = null) {
-        $total = self::hoursInSeconds($hora1) - self::hoursInSeconds($hora2) - self::hoursInSeconds($hora3) - self::hoursInSeconds($hora4);
-        return $total;
     }
 
     /**
