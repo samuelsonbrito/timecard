@@ -3,7 +3,9 @@
 namespace TimeCard\Card;
 use TimeCard\Utils\CardUtil;
 
-trait CardTrait {
+trait ToleranceTrait {
+
+	private $tolerance;
 
     public function tolerancePlus($hour){
 
@@ -21,6 +23,10 @@ trait CardTrait {
 	    $dateTime = clone $hour;
 
         return $dateTime->modify("-{$tolerance} minutes");
+    }
+
+    public function getTolerance(){
+        return $this->tolerance;
     }
 
 }

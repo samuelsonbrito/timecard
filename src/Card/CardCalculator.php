@@ -5,14 +5,13 @@ namespace TimeCard\Card;
 use \DateTime;
 use TimeCard\Time\Time;
 use TimeCard\Utils\CardUtil;
-use TimeCard\Card\CardTrait;
+use TimeCard\Card\ToleranceTrait;
 
 class CardCalculator{
 
-    use CardTrait;
+    use ToleranceTrait;
 
 	private $schedules;
-	private $tolerance;
 	private $hour1;
 	private $hour2;
 	private $hour3;
@@ -143,7 +142,5 @@ class CardCalculator{
 
     }
 
-    public function getTolerance(){
-        return $this->tolerance;
-    }
+
 }
