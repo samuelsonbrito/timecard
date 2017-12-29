@@ -70,30 +70,8 @@ class Time {
         return $hoursFormat;
     }
 
-    public static function somarHorasSeg($hrstrab1, $hrstrab2, $hrstrab3, $hrstrab4, $hrstrab5, $hrstrab6, $hrstrab7, $hrstrab8, $descanso = null) {
 
-        $hora1 = Time::hoursInSeconds($hrstrab1);
-        $hora2 = Time::hoursInSeconds($hrstrab2);
-        $hora3 = Time::hoursInSeconds($hrstrab3);
-        $hora4 = Time::hoursInSeconds($hrstrab4);
-        $hora5 = Time::hoursInSeconds($hrstrab5);
-        $hora6 = Time::hoursInSeconds($hrstrab6);
-        $hora7 = Time::hoursInSeconds($hrstrab7);
-        $hora8 = Time::hoursInSeconds($hrstrab8);
-        $desc = Time::hoursInSeconds($descanso);
-        $trabalhadas = 0;
-        $hrsTrabalhadas = ($hora1 + $hora2 + $hora3 + $hora4 + $hora5 + $hora6 + $hora7 + $hora8);
-
-        if ($hrsTrabalhadas > 0):
-
-            $trabalhadas = abs(($hora1 + $hora2 + $hora3 + $hora4 + $hora5 + $hora6 + $hora7 + $hora8) - $desc);
-        endif;
-
-
-        return $trabalhadas;
-    }
-
-    public static function diffTimes($hora1, $hora2) {
+    public static function diffHours($hora1, $hora2) {
 
         $data1 = date('Y-m-d');
 

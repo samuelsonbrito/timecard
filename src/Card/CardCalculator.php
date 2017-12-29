@@ -91,7 +91,7 @@ class CardCalculator{
 
     	if(strtotime($hoursIntervalRegister->format("%H:%I:%S")) < strtotime($hoursIntervalTolerance)){
 
-    	return Time::diffTimes($hoursIntervalRegister->format("%H:%I:%S"),$hoursInterval->format("%H:%I:%S"));
+    	return Time::diffHours($hoursIntervalRegister->format("%H:%I:%S"),$hoursInterval->format("%H:%I:%S"));
     	}
 
     }
@@ -124,7 +124,7 @@ class CardCalculator{
 
         if(strtotime($hoursIntervalRegister->format("%H:%I:%S")) > strtotime($hoursIntervalTolerance)){
 
-        return Time::diffTimes($hoursIntervalRegister->format("%H:%I:%S"),$hoursInterval->format("%H:%I:%S"));
+        return Time::diffHours($hoursIntervalRegister->format("%H:%I:%S"),$hoursInterval->format("%H:%I:%S"));
         }
 
     }
