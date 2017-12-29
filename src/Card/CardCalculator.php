@@ -16,10 +16,10 @@ class CardCalculator{
 
     public function __construct(array $hours, $tolerance = null){
     	$this->tolerance = is_int($tolerance) ? 5 : $tolerance;
-        $this->hour1 = is_null($hours[0]) ? null : new DateTime($hours[0]);
-        $this->hour2 = is_null($hours[1]) ? null : new DateTime($hours[1]);
-        $this->hour3 = is_null($hours[2]) ? null : new DateTime($hours[2]);
-        $this->hour4 = is_null($hours[3]) ? null : new DateTime($hours[3]);
+        $this->hour1 = null ?? new DateTime($hours[0]);
+        $this->hour2 = null ?? new DateTime($hours[1]);
+        $this->hour3 = null ?? new DateTime($hours[2]);
+        $this->hour4 = null ?? new DateTime($hours[3]);
     }
 
     public function setSchedules($schedules){
