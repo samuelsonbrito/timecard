@@ -9,23 +9,11 @@ namespace TimeCard\Time;
  *
  * - Converter horas em segundos, minutos...
  * - Para sistemas sem padronizações e formarmatos de horas incompatíveis
- * 
+ *
  * @author Samuelson
  */
 
 class Time {
-
-    public static function horasEmSegundos($hora) {
-        if (count(explode(':', $hora)) == 3):
-            $hora_exp = explode(':', $hora);
-            $horasEmSeg = abs($hora_exp[0]) * 3600;
-            $minutosEmSeg = abs($hora_exp[1]) * 60;
-            $segundos = $horasEmSeg + $minutosEmSeg;
-            return $segundos;
-        else:
-            return null;
-        endif;
-    }
 
     public static function hoursInSeconds($hour) {
         if (count(explode(':', $hour)) == 3):
@@ -60,29 +48,6 @@ class Time {
         endif;
     }
 
-    public static function formatSegHr($segundos) {
-
-
-        $horas = floor($segundos / 3600);
-        $segundos -= $horas * 3600;
-        $minutos = floor($segundos / 60);
-        $segundos -= $minutos * 60;
-
-        if ($horas < 10) {
-            $horas = "0" . $horas;
-        }
-        if ($minutos < 10) {
-            $minutos = "0" . $minutos;
-        }
-        if ($segundos < 10) {
-            $segundos = "0" . $segundos;
-        }
-
-        $totalHorasTrabalhadas = $horas . ":" . $minutos . ":" . $segundos;
-
-        return $totalHorasTrabalhadas;
-    }
-
     public static function formatSecInHr($seconds) {
 
 
@@ -108,15 +73,15 @@ class Time {
 
     public static function somarHorasSeg($hrstrab1, $hrstrab2, $hrstrab3, $hrstrab4, $hrstrab5, $hrstrab6, $hrstrab7, $hrstrab8, $descanso = null) {
 
-        $hora1 = Time::horasEmSegundos($hrstrab1);
-        $hora2 = Time::horasEmSegundos($hrstrab2);
-        $hora3 = Time::horasEmSegundos($hrstrab3);
-        $hora4 = Time::horasEmSegundos($hrstrab4);
-        $hora5 = Time::horasEmSegundos($hrstrab5);
-        $hora6 = Time::horasEmSegundos($hrstrab6);
-        $hora7 = Time::horasEmSegundos($hrstrab7);
-        $hora8 = Time::horasEmSegundos($hrstrab8);
-        $desc = Time::horasEmSegundos($descanso);
+        $hora1 = Time::hoursInSeconds($hrstrab1);
+        $hora2 = Time::hoursInSeconds($hrstrab2);
+        $hora3 = Time::hoursInSeconds($hrstrab3);
+        $hora4 = Time::hoursInSeconds($hrstrab4);
+        $hora5 = Time::hoursInSeconds($hrstrab5);
+        $hora6 = Time::hoursInSeconds($hrstrab6);
+        $hora7 = Time::hoursInSeconds($hrstrab7);
+        $hora8 = Time::hoursInSeconds($hrstrab8);
+        $desc = Time::hoursInSeconds($descanso);
         $trabalhadas = 0;
         $hrsTrabalhadas = ($hora1 + $hora2 + $hora3 + $hora4 + $hora5 + $hora6 + $hora7 + $hora8);
 
@@ -827,7 +792,7 @@ class Time {
         echo '<br>';
 
         */
-        return ((self::formatAdcNot($hrNot) == "00:00:00") || (self::horasEmSegundos(self::formatAdcNot($hrNot)) > 28800)) ? null : self::formatAdcNot($hrNot);
+        return ((self::formatAdcNot($hrNot) == "00:00:00") || (self::hoursInSeconds(self::formatAdcNot($hrNot)) > 28800)) ? null : self::formatAdcNot($hrNot);
     }
 
 
@@ -915,7 +880,7 @@ class Time {
         //echo ' HORA1['.$pontos[1]->format('Y-m-d H:i:s').'] - HORA2['.$pontos[2]->format('Y-m-d H:i:s').'] LEI5['.$datetimelei5->format('Y-m-d H:i:s').'] LEI22['.$datetimelei22->format('Y-m-d H:i:s').']';
      
 
-       return ((self::formatAdcNot($hrNot) == "00:00:00") || (self::horasEmSegundos(self::formatAdcNot($hrNot)) > 28800)) ? null : self::formatAdcNot($hrNot);
+       return ((self::formatAdcNot($hrNot) == "00:00:00") || (self::hoursInSeconds(self::formatAdcNot($hrNot)) > 28800)) ? null : self::formatAdcNot($hrNot);
     }
     public static function horaInDateTime($data, $hora1, $hora2, $hora3, $hora4) {
 
@@ -1126,7 +1091,7 @@ class Time {
 
         //echo ' HORA1['.$pontos[1]->format('Y-m-d H:i:s').'] - HORA2['.$pontos[2]->format('Y-m-d H:i:s').'] LEI5['.$datetimelei5->format('Y-m-d H:i:s').'] LEI22['.$datetimelei22->format('Y-m-d H:i:s').']';
         
-        return ((self::formatAdcNot($hrNot) == "00:00:00") || (self::horasEmSegundos(self::formatAdcNot($hrNot)) > 28800)) ? null : self::formatAdcNot($hrNot);
+        return ((self::formatAdcNot($hrNot) == "00:00:00") || (self::hoursInSeconds(self::formatAdcNot($hrNot)) > 28800)) ? null : self::formatAdcNot($hrNot);
     }
 
     public static function calcNortuno4SemReducao($data, $hora1, $hora2, $hora3, $hora4) {
@@ -1397,20 +1362,20 @@ class Time {
         $hrTrab3 = (!empty($ponto5) && !empty($ponto6)) ? self::diffTime($data, $ponto5, $ponto6) : 0;
         $hrTrab4 = (!empty($ponto7) && !empty($ponto8)) ? self::diffTime($data, $ponto7, $ponto8) : 0;
 
-        $total = self::horasEmSegundos($hrTrab1) + self::horasEmSegundos($hrTrab2) + self::horasEmSegundos($hrTrab3) + self::horasEmSegundos($hrTrab4);
-        $horasTrabalhadas = (self::horasEmSegundos($descanso) > $total) ? $total : $total - self::horasEmSegundos($descanso);
-        return self::formatSegHr($horasTrabalhadas);
+        $total = self::hoursInSeconds($hrTrab1) + self::hoursInSeconds($hrTrab2) + self::hoursInSeconds($hrTrab3) + self::hoursInSeconds($hrTrab4);
+        $horasTrabalhadas = (self::hoursInSeconds($descanso) > $total) ? $total : $total - self::hoursInSeconds($descanso);
+        return self::formatSecInHr($horasTrabalhadas);
     }
 
     public static function sumHoras($hora1, $hora2, $hora3 = null, $hora4 = null, $hora5 = null) {
-        $total = self::horasEmSegundos($hora1) + self::horasEmSegundos($hora2) + self::horasEmSegundos($hora3) + self::horasEmSegundos($hora4) + self::horasEmSegundos($hora5);
-        return self::formatSegHr($total);
+        $total = self::hoursInSeconds($hora1) + self::hoursInSeconds($hora2) + self::hoursInSeconds($hora3) + self::hoursInSeconds($hora4) + self::hoursInSeconds($hora5);
+        return self::formatSecInHr($total);
     }
 
     public static function subHoras($hora1, $hora2, $hora3 = null, $hora4 = null) {
 
-        $total = self::horasEmSegundos($hora1) - self::horasEmSegundos($hora2) - self::horasEmSegundos($hora3) - self::horasEmSegundos($hora4);
-        return self::formatSegHr($total);
+        $total = self::hoursInSeconds($hora1) - self::hoursInSeconds($hora2) - self::hoursInSeconds($hora3) - self::hoursInSeconds($hora4);
+        return self::formatSecInHr($total);
     }
 
     public static function sub($hour1, $hour2, $hour3 = null, $hour4 = null) {
@@ -1420,7 +1385,7 @@ class Time {
     }    
 
     public static function subHorasInSeg($hora1, $hora2, $hora3 = null, $hora4 = null) {
-        $total = self::horasEmSegundos($hora1) - self::horasEmSegundos($hora2) - self::horasEmSegundos($hora3) - self::horasEmSegundos($hora4);
+        $total = self::hoursInSeconds($hora1) - self::hoursInSeconds($hora2) - self::hoursInSeconds($hora3) - self::hoursInSeconds($hora4);
         return $total;
     }
 
@@ -1439,7 +1404,7 @@ class Time {
     }
 
     private static function checkHrNoturna($hora1, $hora2) {
-        if (Time::horasEmSegundos($hora2) < Time::horasEmSegundos($hora1)) {
+        if (Time::hoursInSeconds($hora2) < Time::hoursInSeconds($hora1)) {
             return true;
         } else {
             return false;
@@ -1448,11 +1413,11 @@ class Time {
 
     private static function checkHrNoturnaData($hora1, $hora2, $hora3, $hora4) {
 
-        if (Time::horasEmSegundos($hora2) < Time::horasEmSegundos($hora1)):
+        if (Time::hoursInSeconds($hora2) < Time::hoursInSeconds($hora1)):
             return true;
-        elseif (Time::horasEmSegundos($hora3) < Time::horasEmSegundos($hora1)):
+        elseif (Time::hoursInSeconds($hora3) < Time::hoursInSeconds($hora1)):
             return true;
-        elseif (Time::horasEmSegundos($hora4) < Time::horasEmSegundos($hora1)):
+        elseif (Time::hoursInSeconds($hora4) < Time::hoursInSeconds($hora1)):
             return true;
         else:
             return false;

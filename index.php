@@ -25,6 +25,4 @@ echo 'Horas trabalhadas: '.$card->worked();
 echo '<br>';
 echo 'Horas extras: '.$card->overtimeInterval1();
 echo '<br>';
-echo 'Horas em segundos: '.Time::horasEmSegundos("02:00:00");
-echo '<br>';
 echo 'Horas extras entrada antecipada: '.$card->overtimeHour1();
