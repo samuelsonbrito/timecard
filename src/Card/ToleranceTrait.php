@@ -1,7 +1,7 @@
 <?php
 
 namespace TimeCard\Card;
-use TimeCard\Utils\CardUtil;
+use TimeCard\Time\Time;
 
 trait ToleranceTrait {
 
@@ -9,7 +9,7 @@ trait ToleranceTrait {
 
     public function tolerancePlus($hour){
 
-        $tolerance = CardUtil::getMinInt($this->getTolerance());
+        $tolerance = Time::getMinInt($this->getTolerance());
 
 	    $dateTime = clone $hour;
 
@@ -18,7 +18,7 @@ trait ToleranceTrait {
 
     public function toleranceLess($hour){
 
-        $tolerance = CardUtil::getMinInt($this->getTolerance());
+        $tolerance = Time::getMinInt($this->getTolerance());
 
 	    $dateTime = clone $hour;
 

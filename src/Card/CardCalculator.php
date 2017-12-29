@@ -4,7 +4,6 @@ namespace TimeCard\Card;
 
 use \DateTime;
 use TimeCard\Time\Time;
-use TimeCard\Utils\CardUtil;
 use TimeCard\Card\ToleranceTrait;
 
 class CardCalculator{
