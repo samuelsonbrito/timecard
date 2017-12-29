@@ -27,6 +27,18 @@ class Time {
         endif;
     }
 
+    public static function hoursInSeconds($hour) {
+        if (count(explode(':', $hour)) == 3):
+            $hour_exp = explode(':', $hour);
+            $hourInSeconds = abs($hour_exp[0]) * 3600;
+            $minInSeconds = abs($hour_exp[1]) * 60;
+            $seconds = $hourInSeconds + $minInSeconds;
+            return $seconds;
+        else:
+            return null;
+        endif;
+    }
+
     public static function horasEmMinutos($hora) {
         if (count(explode(':', $hora)) == 3):
             $hora_exp = explode(':', $hora);
@@ -69,6 +81,29 @@ class Time {
         $totalHorasTrabalhadas = $horas . ":" . $minutos . ":" . $segundos;
 
         return $totalHorasTrabalhadas;
+    }
+
+    public static function formatSecInHr($seconds) {
+
+
+        $hours = floor($seconds / 3600);
+        $seconds -= $hours * 3600;
+        $minutes = floor($seconds / 60);
+        $seconds -= $minutes * 60;
+
+        if ($hours < 10) {
+            $hours = "0" . $hours;
+        }
+        if ($minutes < 10) {
+            $minutes = "0" . $minutes;
+        }
+        if ($seconds < 10) {
+            $seconds = "0" . $seconds;
+        }
+
+        $hoursFormat = $hours . ":" . $minutes . ":" . $seconds;
+
+        return $hoursFormat;
     }
 
     public static function somarHorasSeg($hrstrab1, $hrstrab2, $hrstrab3, $hrstrab4, $hrstrab5, $hrstrab6, $hrstrab7, $hrstrab8, $descanso = null) {
@@ -1377,6 +1412,12 @@ class Time {
         $total = self::horasEmSegundos($hora1) - self::horasEmSegundos($hora2) - self::horasEmSegundos($hora3) - self::horasEmSegundos($hora4);
         return self::formatSegHr($total);
     }
+
+    public static function sub($hour1, $hour2, $hour3 = null, $hour4 = null) {
+
+        $total = self::hoursInSeconds($hour1) - self::hoursInSeconds($hour2) - self::hoursInSeconds($hour3) - self::hoursInSeconds($hour4);
+        return self::formatSecInHr($total);
+    }    
 
     public static function subHorasInSeg($hora1, $hora2, $hora3 = null, $hora4 = null) {
         $total = self::horasEmSegundos($hora1) - self::horasEmSegundos($hora2) - self::horasEmSegundos($hora3) - self::horasEmSegundos($hora4);
