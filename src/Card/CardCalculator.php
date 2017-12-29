@@ -106,18 +106,24 @@ class CardCalculator{
 
     public function overdueHour2(){
 
-        if($this->hour2 > ($this->tolerancePlus($this->schedules->getHour2()))){
+        if($this->hour2 < $this->toleranceLess($this->schedules->getHour2())){
 
             $interval = $this->hour2->diff($this->schedules->getHour2());
-
-            $e = new DateTime('00:00');
-            $f = clone $e;
-            $e->add($interval1);
-            $e->add($interval2);
 
             return $interval->format("%H:%I:%S");
         }
     }
+
+    public function overdueHour4(){
+
+        if($this->hour4 < $this->toleranceLess($this->schedules->getHour4())){
+
+            $interval = $this->hour4->diff($this->schedules->getHour4());
+
+            return $interval->format("%H:%I:%S");
+        }
+    }
+
     /**
     * Período de intervalo - coletando atrasos de cada intervalo de forma dinâmica
     */
@@ -138,7 +144,8 @@ class CardCalculator{
     */
     private function tolerancePlus($hour){
 
-    	$tolerance = (strlen($this->tolerance) == 8) || (strlen($this->tolerance) == 6)  ? (int) substr($this->tolerance,4,1) : (strlen($this->tolerance) == 1) ? (int) $this->tolerance : 0;
+    	$tolerance = intval(((strlen($this->tolerance) == 8) || (strlen($this->tolerance) == 6))  ? substr($this->tolerance,3
+    ,2) : ((strlen($this->tolerance) == 1) ? $this->tolerance : 0));
 
 	    $dateTime = clone $hour;
 	    return $dateTime->modify("+{$tolerance} minutes");
@@ -146,9 +153,10 @@ class CardCalculator{
     }
 
     private function toleranceLess($hour){
-    	$tolerance = (strlen($this->tolerance) == 8) || (strlen($this->tolerance) == 6)  ? (int) substr($this->tolerance,4,1) : (strlen($this->tolerance) == 1) ? (int) $this->tolerance : 0;
+    	$tolerance = intval(((strlen($this->tolerance) == 8) || (strlen($this->tolerance) == 6))  ? substr($this->tolerance,3
+    ,2) : ((strlen($this->tolerance) == 1) ? $this->tolerance : 0));
 
 	    	$dateTime = clone $hour;
-	    	return $dateTime->modify("-{$this->tolerance} minutes");
+	    	return $dateTime->modify("-{$tolerance} minutes");
     }
 }

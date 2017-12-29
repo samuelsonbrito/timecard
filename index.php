@@ -10,7 +10,7 @@ $arraySchedule = ['2017-01-01 08:00:00','2017-01-01 12:00:00','2017-01-01 14:00:
 
 $schedule = new Schedules('2017-01-01',$arraySchedule);
 
-$arrayCard = ['2017-01-01 07:00:00','2017-01-01 12:00:00','2017-01-01 12:30:00','2017-01-01 18:06:00'];
+$arrayCard = ['2017-01-01 07:00:00','2017-01-01 12:00:00','2017-01-01 12:30:00','2017-01-01 17:51:00'];
 
 $card = new CardCalculator($arrayCard,"00:05:00");
 $card->setSchedules($schedule);
@@ -26,3 +26,11 @@ echo '<br>';
 echo 'Horas extras: '.$card->overtimeInterval1();
 echo '<br>';
 echo 'Horas extras entrada antecipada: '.$card->overtimeHour1();
+echo '<br>';
+echo 'Horas atradadas 4: '.$card->overdueHour4();
+
+$tolerance1 = '00:05:00';
+
+echo '<hr>';
+echo strlen($tolerance1)==8;
+
