@@ -1,6 +1,6 @@
 # timecard
 
-> Lib PHP para calculo de horas - Open-Source
+> Lib PHP para cálculo de horas - Open-Source
 
 ## Build Setup
 
