@@ -7,7 +7,7 @@ trait ToleranceTrait {
 
 	private $tolerance;
 
-    public function tolerancePlus($hour){
+    private function tolerancePlus($hour){
 
         $tolerance = Time::getMinInt($this->getTolerance());
 
@@ -16,7 +16,7 @@ trait ToleranceTrait {
         return $dateTime->modify("+{$tolerance} minutes");
     }
 
-    public function toleranceLess($hour){
+    private function toleranceLess($hour){
 
         $tolerance = Time::getMinInt($this->getTolerance());
 

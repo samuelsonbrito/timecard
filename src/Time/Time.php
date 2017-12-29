@@ -1314,7 +1314,7 @@ class Time {
 
     }
 
-    public static function sumDateTime($interval1, $interval2){
+    public static function sumDateTime($interval1, $interval2, $interval3 = null, $interval4 = null){
 
         $e = new \DateTime('00:00');
         $f = clone $e;
@@ -1325,6 +1325,12 @@ class Time {
         if($interval2)
             $e->add($interval2);
 
+        if($interval3)
+            $e->add($interva3);
+
+        if($interval4)
+            $e->add($interval4);
+
         return $f->diff($e)->format("%H:%I");
     }
 
@@ -1334,6 +1340,6 @@ class Time {
 
     public static function diffValueOrNull($hour1, $hour2){
         return (!empty($hour1) && !empty($hour2)) ? $hour1->diff($hour2)->format("%H:%I:%S") : null;
-    }    
+    }
 
 }
