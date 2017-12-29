@@ -11,12 +11,16 @@ class CardCalculator{
     use ToleranceTrait;
 
 	private $schedules;
+    private $hoursCount;
 	private $hour1;
 	private $hour2;
 	private $hour3;
 	private $hour4;
 
     public function __construct(array $hours, $tolerance = '00:05:00'){
+
+        $this->hoursCount = count(array_filter($hours));
+
     	$this->tolerance = is_int($tolerance) ? 5 : $tolerance;
         $this->hour1 = !empty($hours[0]) ? new DateTime($hours[0]) : null ;
         $this->hour2 = !empty($hours[1]) ? new DateTime($hours[1]) : null ;
@@ -38,6 +42,8 @@ class CardCalculator{
     }
 
     public function overtime(){
+
+        
 
     }
 
@@ -137,6 +143,10 @@ class CardCalculator{
             return Time::diffHours($hoursIntervalRegister,$hoursInterval);
         }
 
+    }
+
+    public function gethoursCount(){
+        return $this->hoursCount;
     }
 
 
