@@ -4,6 +4,7 @@ namespace TimeCard\Card;
 
 use \DateTime;
 use TimeCard\Time\Time;
+use TimeCard\Utils\CardUtil;
 
 class CardCalculator{
 
@@ -144,19 +145,20 @@ class CardCalculator{
     */
     private function tolerancePlus($hour){
 
-    	$tolerance = intval(((strlen($this->tolerance) == 8) || (strlen($this->tolerance) == 6))  ? substr($this->tolerance,3
-    ,2) : ((strlen($this->tolerance) == 1) ? $this->tolerance : 0));
+    	$tolerance = CardUtil::getMinInt($this->tolerance);
 
 	    $dateTime = clone $hour;
+
 	    return $dateTime->modify("+{$tolerance} minutes");
 
     }
 
     private function toleranceLess($hour){
-    	$tolerance = intval(((strlen($this->tolerance) == 8) || (strlen($this->tolerance) == 6))  ? substr($this->tolerance,3
-    ,2) : ((strlen($this->tolerance) == 1) ? $this->tolerance : 0));
 
-	    	$dateTime = clone $hour;
-	    	return $dateTime->modify("-{$tolerance} minutes");
+    	$tolerance = CardUtil::getMinInt($this->tolerance);
+
+	    $dateTime = clone $hour;
+
+        return $dateTime->modify("-{$tolerance} minutes");
     }
 }
