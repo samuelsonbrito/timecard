@@ -47,6 +47,10 @@ class CardCalculator{
 
     }
 
+    public function extraNight(){
+
+    }
+
     /**
     * Dividindo extras em partes para depois unir no overtime()
 	*/
@@ -133,7 +137,7 @@ class CardCalculator{
     * metodos auxiliares para tolerância
     */
     private function tolerancePlus($hour){
-    	
+
     	$tolerance = (strlen($this->tolerance) == 8) || (strlen($this->tolerance) == 6)  ? (int) substr($this->tolerance,4,1) : (strlen($this->tolerance) == 1) ? (int) $this->tolerance : 0;
 
 	    $dateTime = clone $hour;

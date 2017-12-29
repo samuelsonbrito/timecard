@@ -38,10 +38,10 @@ class Time {
             return null;
         endif;
     }
-    public static function formatHM($hora) {
-        if (count(explode(':', $hora)) == 3):
-            $hora_exp = explode(':', $hora);
-            return "$hora_exp[0]:$hora_exp[1]";
+    public static function formatHM($hour) {
+        if (count(explode(':', $hour)) == 3):
+            $hour_exp = explode(':', $hour);
+            return "$hour_exp[0]:$hour_exp[1]";
         else:
             return null;
         endif;
@@ -71,29 +71,29 @@ class Time {
     }
 
 
-    public static function diffHours($hora1, $hora2) {
+    public static function diffHours($hour1, $hour2) {
 
-        $data1 = date('Y-m-d');
+        $date1 = date('Y-m-d');
 
-        $datetime1 = date_create("$data1 $hora1");
-        $datetime2 = date_create("$data1 $hora2");
+        $datetime1 = date_create("$date1 $hour1");
+        $datetime2 = date_create("$date1 $hour2");
         $interval = date_diff($datetime1, $datetime2);
 
         return $interval->format("%H:%I:%S");
     }
 
-    public static function diffTime($data1, $hora1, $hora2) {
+    public static function diffTime($date1, $hour1, $hour2) {
 
-        $data2 = null;
+        $date2 = null;
 
-        if (self::checkHrNoturna($hora1, $hora2)):
-            $data2 = date('Y-m-d', strtotime($data1 . ' + 1 days'));
+        if (self::checkHrNoturna($hour1, $hour2)):
+            $date2 = date('Y-m-d', strtotime($date1 . ' + 1 days'));
         else:
-            $data2 = $data1;
+            $date2 = $date1;
         endif;
 
-        $datetime1 = date_create("$data1 $hora1");
-        $datetime2 = date_create("$data2 $hora2");
+        $datetime1 = date_create("$date1 $hour1");
+        $datetime2 = date_create("$date2 $hour2");
         $interval = date_diff($datetime1, $datetime2);
 
         return $interval->format("%H:%I:%S");
@@ -643,7 +643,7 @@ class Time {
         endif;
 
         if ($datetime5 > $datetimelei22):
-            
+
             if(!empty($datetime6)){
 
                 if($datetime6 > $datetimelei22){
@@ -651,7 +651,7 @@ class Time {
                 }else{
                     $pontos[5] = $datetime5;
                 }
-                
+
             }else{
                 $pontos[5] = $datetime5;
             }
@@ -680,7 +680,7 @@ class Time {
             $interval2 = date_diff($pontos[3], $pontos[4]);
             $hrNot += Time::hoursInMinutes($interval2->format("%H:%I:%S")) / 52.5;
         }
-     
+
         if(($datetime5>=$datetimelei22 && $datetime5 < $datetimelei5) || ($datetime6 >= $datetimelei22 && $datetime6 < $datetimelei5)){
             $interval3 = date_diff($pontos[5], $pontos[6]);
             $hrNot += Time::hoursInMinutes($interval3->format("%H:%I:%S")) / 52.5;
@@ -771,16 +771,13 @@ class Time {
             $hrNot += Time::hoursInMinutes($interval2->format("%H:%I:%S")) / 52.5;
         }
 
-        //echo ' HORA1['.$pontos[1]->format('Y-m-d H:i:s').'] - HORA2['.$pontos[2]->format('Y-m-d H:i:s').'] LEI5['.$datetimelei5->format('Y-m-d H:i:s').'] LEI22['.$datetimelei22->format('Y-m-d H:i:s').']';
-     
-
        return ((self::formatAdcNot($hrNot) == "00:00:00") || (self::hoursInSeconds(self::formatAdcNot($hrNot)) > 28800)) ? null : self::formatAdcNot($hrNot);
     }
     public static function horaInDateTime($data, $hora1, $hora2, $hora3, $hora4) {
 
         $data0 = date('Y-m-d', strtotime($data . ' + 1 days'));
         $pontos = array();
-        
+
         $data1 = $data;
         $data2 = null;
         $data3 = null;
@@ -818,8 +815,7 @@ class Time {
         $datetime2 = date_create("$data2 $hora2");
         $datetime3 = date_create("$data3 $hora3");
         $datetime4 = date_create("$data4 $hora4");
-        
-        
+
         $pontos[] = date_format($datetime1, 'Y-m-d H:i:s');
         $pontos[] = date_format($datetime2, 'Y-m-d H:i:s');
         $pontos[] = date_format($datetime3, 'Y-m-d H:i:s');
@@ -874,10 +870,10 @@ class Time {
 
         if ($datetime1 > $datetimelei22 && $datetime1 < $datetimelei5):
             $pontos[1] = $datetime1;
-        
+
 
         else:
-        
+
             $pontos[1] = $datetimelei22;
 
             if (self::checkHrNoturna($hora1, $hora2)):
@@ -886,45 +882,33 @@ class Time {
                     $pontos[1] = $datetime1;
                 endif;
 
-                
-
             else:
-
-
 
                if($datetime1 > $datetimelei22 && $datetime1 < $datetimelei5):
                     $pontos[1] = $datetime1;
-                
                 else:
 
-                    
-                    
                     if($datetime1 < $datetimelei22):
                         $pontos[1] = $datetimelei22;
-                    
                     else:
-                        ;
                         $pontos[1] =$datetime1;
                     endif;
 
 
-
                     if (!self::checkHrNoturna($hora1, $hora2)):
-                        
 
                          $datetime1tolerancia = date_create("$data1 00:00:00");
                          $datetime2tolerancia = date_create("$data1 01:00:00");
 
                         if($datetime1>= $datetime1tolerancia && $datetime1<= $datetime2tolerancia) {
-                             
-                             $pontos[1] = $datetime1;
+
+                            $pontos[1] = $datetime1;
                         }
 
                     endif;
-                
 
             endif;
-            
+
             endif;
 
 
@@ -943,7 +927,6 @@ class Time {
                     $pontos[2] = $datetime2;
                 endif;
 
-            
             else:
                if($datetime2 > $datetimelei22):
                     $pontos[2] = $datetime2;
@@ -952,8 +935,6 @@ class Time {
             endif;
 
         endif;
-
-        
 
 
         if ($datetime3 > $datetimelei22):
@@ -972,7 +953,7 @@ class Time {
 
 
         if(!empty($pontos[1]) && !empty($pontos[2])){
-        
+
             if(($datetime1>=$datetimelei22 || $datetime1 < $datetimelei5) ){
                 $interval = date_diff($pontos[1], $pontos[2]);
                 $hrNot = Time::hoursInMinutes($interval->format("%H:%I:%S")) / 52.5;
@@ -983,8 +964,6 @@ class Time {
 
         }
 
-        //echo ' HORA1['.$pontos[1]->format('Y-m-d H:i:s').'] - HORA2['.$pontos[2]->format('Y-m-d H:i:s').'] LEI5['.$datetimelei5->format('Y-m-d H:i:s').'] LEI22['.$datetimelei22->format('Y-m-d H:i:s').']';
-        
         return ((self::formatAdcNot($hrNot) == "00:00:00") || (self::hoursInSeconds(self::formatAdcNot($hrNot)) > 28800)) ? null : self::formatAdcNot($hrNot);
     }
 
@@ -1107,15 +1086,12 @@ class Time {
      */
     public static function calcNortuno($hora2) {
 
-//        $interval = date_create("2016-01-01 $hora2");
-
         $hrNot = Time::hoursInMinutes($hora2) / 52.5;
 
         $exHrNot = explode(".", $hrNot);
 
         return self::formatZeroLeft($exHrNot[0]) . ":" . (isset($exHrNot[1]) ? self::formatZeroLeft(round(("0.$exHrNot[1]" * 60))) : "00") . ":00";
 
-//        return $interval->format("%H:%I:%S");
     }
 
     /**
@@ -1188,8 +1164,6 @@ class Time {
      * @return boolean
      */
     public static function isTimeMaior22($data, $hora1, $hora2 = null, $hora3 = null, $hora4 = null) {
-        
-
 
         $data0 = date('Y-m-d', strtotime($data . ' + 1 days'));
         $pontos = array();
@@ -1273,7 +1247,7 @@ class Time {
     }
 
     /**
-     * 
+     *
      * @param type $hora
      * @return type
      */
