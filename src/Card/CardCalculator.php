@@ -16,12 +16,12 @@ class CardCalculator{
 	private $hour3;
 	private $hour4;
 
-    public function __construct(array $hours, $tolerance = null){
+    public function __construct(array $hours, $tolerance = '00:05:00'){
     	$this->tolerance = is_int($tolerance) ? 5 : $tolerance;
-        $this->hour1 = null ?? new DateTime($hours[0]);
-        $this->hour2 = null ?? new DateTime($hours[1]);
-        $this->hour3 = null ?? new DateTime($hours[2]);
-        $this->hour4 = null ?? new DateTime($hours[3]);
+        $this->hour1 = !empty($hours[0]) ? new DateTime($hours[0]) : null ;
+        $this->hour2 = !empty($hours[1]) ? new DateTime($hours[1]) : null ;
+        $this->hour3 = !empty($hours[2]) ? new DateTime($hours[2]) : null ;
+        $this->hour4 = !empty($hours[3]) ? new DateTime($hours[3]) : null ;
     }
 
     public function setSchedules($schedules){
@@ -30,15 +30,11 @@ class CardCalculator{
 
     public function worked(){
 
-    	$interval1 = $this->hour1->diff($this->hour2);
-    	$interval2 = $this->hour3->diff($this->hour4);
+    	$interval1 = Time::diffOrNull($this->hour1,$this->hour2);
 
-    	$e = new DateTime('00:00');
-		$f = clone $e;
-		$e->add($interval1);
-		$e->add($interval2);
+    	$interval2 = Time::diffOrNull($this->hour3,$this->hour4);
 
-    	return $f->diff($e)->format("%H:%I");
+    	return Time::sumDateTime($interval1,$interval2);
     }
 
     public function overtime(){
@@ -61,9 +57,9 @@ class CardCalculator{
 
         if($this->hour1 < ($this->tolerancePlus($this->schedules->getHour1()))){
 
-            $interval = $this->hour1->diff($this->schedules->getHour1());
+            $interval = Time::diffValueOrNull($this->hour1,$this->schedules->getHour1());
 
-            return $interval->format("%H:%I:%S");
+            return $interval;
         }
     }
 
@@ -71,9 +67,9 @@ class CardCalculator{
 
     	if($this->hour2 > ($this->tolerancePlus($this->schedules->getHour2()))){
 
-    		$interval = $this->hour2->diff($this->schedules->getHour2());
+    		$interval = Time::diffValueOrNull($this->hour2,$this->schedules->getHour2());
 
-    		return $interval->format("%H:%I:%S");
+    		return $interval;
     	}
     }
 
@@ -81,9 +77,9 @@ class CardCalculator{
 
     	if($this->hour4 > ($this->tolerancePlus($this->schedules->getHour4()))){
 
-    		$interval = $this->hour4->diff($this->schedules->getHour4());
+            Time::diffValueOrNull($this->hour4,$this->schedules->getHour4());
 
-    		return $interval->format("%H:%I:%S");
+    		return $interval;
     	}
     }
 
@@ -91,13 +87,14 @@ class CardCalculator{
     * Período de intervalo - coletando extras de cada intervalo de forma dinâmica
     */
     public function overtimeInterval1(){
-    	$hoursInterval = $this->schedules->getHour2()->diff($this->schedules->getHour3());
-    	$hoursIntervalTolerance = Time::sub($hoursInterval->format("%H:%I:%S"),$this->tolerance);
-    	$hoursIntervalRegister = $this->hour2->diff($this->hour3);
 
-    	if(strtotime($hoursIntervalRegister->format("%H:%I:%S")) < strtotime($hoursIntervalTolerance)){
+    	$hoursInterval = Time::diffValueOrNull($this->schedules->getHour2(),$this->schedules->getHour3());
+    	$hoursIntervalTolerance = Time::sub($hoursInterval,$this->tolerance);
+    	$hoursIntervalRegister = Time::diffValueOrNull($this->hour2,$this->hour3);
 
-    	return Time::diffHours($hoursIntervalRegister->format("%H:%I:%S"),$hoursInterval->format("%H:%I:%S"));
+    	if(strtotime($hoursIntervalRegister) < strtotime($hoursIntervalTolerance)){
+
+    	return Time::diffHours($hoursIntervalRegister,$hoursInterval);
     	}
 
     }
@@ -110,9 +107,9 @@ class CardCalculator{
 
         if($this->hour2 < $this->toleranceLess($this->schedules->getHour2())){
 
-            $interval = $this->hour2->diff($this->schedules->getHour2());
+            $interval = Time::diffValueOrNull($this->hour2,$this->schedules->getHour2());
 
-            return $interval->format("%H:%I:%S");
+            return $interval;
         }
     }
 
@@ -120,9 +117,9 @@ class CardCalculator{
 
         if($this->hour4 < $this->toleranceLess($this->schedules->getHour4())){
 
-            $interval = $this->hour4->diff($this->schedules->getHour4());
+            $interval = Time::diffValueOrNull($this->hour4,$this->schedules->getHour4());
 
-            return $interval->format("%H:%I:%S");
+            return $interval;
         }
     }
 
@@ -130,13 +127,14 @@ class CardCalculator{
     * Período de intervalo - coletando atrasos de cada intervalo de forma dinâmica
     */
     public function overdueInterval1(){
-        $hoursInterval = $this->schedules->getHour2()->diff($this->schedules->getHour3());
-        $hoursIntervalTolerance = Time::sum($hoursInterval->format("%H:%I:%S"),$this->tolerance);
-        $hoursIntervalRegister = $this->hour2->diff($this->hour3);
 
-        if(strtotime($hoursIntervalRegister->format("%H:%I:%S")) > strtotime($hoursIntervalTolerance)){
+        $hoursInterval = Time::diffValueOrNull($this->schedules->getHour2(),$this->schedules->getHour3());
 
-        return Time::diffHours($hoursIntervalRegister->format("%H:%I:%S"),$hoursInterval->format("%H:%I:%S"));
+        $hoursIntervalTolerance = Time::sum($hoursInterval,$this->tolerance);
+        $hoursIntervalRegister = Time::diffValueOrNull($this->hour2,$this->hour3);
+
+        if(strtotime($hoursIntervalRegister) > strtotime($hoursIntervalTolerance)){
+            return Time::diffHours($hoursIntervalRegister,$hoursInterval);
         }
 
     }
