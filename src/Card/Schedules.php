@@ -13,11 +13,12 @@ class Schedules {
 	private $hour4;
 
     public function __construct($date, array $hours){
-    	$this->date = null ?? new DateTime($date);
-        $this->hour1 = null ?? new DateTime($hours[0]);
-        $this->hour2 = null ?? new DateTime($hours[1]);
-        $this->hour3 = null ?? new DateTime($hours[2]);
-        $this->hour4 = null ?? new DateTime($hours[3]);
+
+    	$this->date = !empty($date) ? new DateTime($date) : null;
+        $this->hour1 = !empty($hours[0]) ? new DateTime($hours[0]) : null;
+        $this->hour2 = !empty($hours[1]) ? new DateTime($hours[1]) : null;
+        $this->hour3 = !empty($hours[2]) ? new DateTime($hours[2]) : null;
+        $this->hour4 = !empty($hours[3]) ? new DateTime($hours[3]) : null;
     }
 
     public function getDate(){

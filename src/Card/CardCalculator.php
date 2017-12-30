@@ -45,11 +45,11 @@ class CardCalculator{
         switch ($this->hoursCount) {
             case 2:
 
-                return Time::sum($this->overtimeHour1(),$this->overtimeHour4());
+                return Time::sum($this->overtimeHour1(),$this->overtimeHour2());
 
             case 4:
 
-                return Time::sum($this->overtimeHour1(),$this->overtimeHour2());
+                return Time::sum($this->overtimeHour1(),$this->overtimeHour4(), $this->overtimeInterval1());
         }
 
     }
