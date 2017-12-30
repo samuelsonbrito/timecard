@@ -45,12 +45,11 @@ class CardCalculator{
         switch ($this->hoursCount) {
             case 2:
 
-                Time::sum($this->overtimeHour1(),$this->overtimeHour2());
+                return Time::sum($this->overtimeHour1(),$this->overtimeHour4());
 
-                break;
-            default:
-                // code...
-                break;
+            case 4:
+
+                return Time::sum($this->overtimeHour1(),$this->overtimeHour2());
         }
 
     }
@@ -91,7 +90,7 @@ class CardCalculator{
 
     	if($this->hours['hour4'] > ($this->tolerancePlus($this->schedules->getHour4()))){
 
-            Time::diffValueOrNull($this->hours['hour4'],$this->schedules->getHour4());
+            $interval = Time::diffValueOrNull($this->hours['hour4'],$this->schedules->getHour4());
 
     		return $interval;
     	}
@@ -107,8 +106,7 @@ class CardCalculator{
     	$hoursIntervalRegister = Time::diffValueOrNull($this->hours['hour2'],$this->hours['hour3']);
 
     	if(strtotime($hoursIntervalRegister) < strtotime($hoursIntervalTolerance)){
-
-    	return Time::diffHours($hoursIntervalRegister,$hoursInterval);
+    	   return Time::diffHours($hoursIntervalRegister,$hoursInterval);
     	}
 
     }
