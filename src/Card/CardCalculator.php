@@ -72,7 +72,7 @@ class CardCalculator{
                 return Time::sum($this->overdueHour1(),$this->overdueHour2());
 
             case 4:
-                return Time::sum($this->overdueHour1(),$this->overdueHour4(),$this->overtimeInterval1());
+                return Time::sum($this->overdueHour1(),$this->overdueHour4(),$this->overdueInterval1());
         }
 
     }
