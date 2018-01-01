@@ -38,4 +38,4 @@ echo 'Quantidade de batidas:'.$card->gethoursCount();
 echo '<hr>';
 echo 'Total extras:'.$card->overtime();
 echo '<hr>';
-echo 'Horas atrasadas 1:'.$card->overdueHour1();
+echo 'Horas atrasadas 1: '.$card->overdueHour1();
