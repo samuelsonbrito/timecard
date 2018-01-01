@@ -25,6 +25,11 @@ class CardCalculator{
         $this->hours['hour3'] = !empty($hours[2]) ? new DateTime($hours[2]) : null;
         $this->hours['hour4'] = !empty($hours[3]) ? new DateTime($hours[3]) : null;
 
+        $this->hours['hour5'] = !empty($hours[4]) ? new DateTime($hours[4]) : null;
+        $this->hours['hour6'] = !empty($hours[5]) ? new DateTime($hours[5]) : null;
+        $this->hours['hour7'] = !empty($hours[6]) ? new DateTime($hours[6]) : null;
+        $this->hours['hour8'] = !empty($hours[7]) ? new DateTime($hours[7]) : null;        
+
     }
 
     public function setSchedules($schedules){
@@ -37,7 +42,11 @@ class CardCalculator{
 
     	$interval2 = Time::diffOrNull($this->hours['hour3'],$this->hours['hour4']);
 
-    	return Time::sumDateTime($interval1,$interval2);
+        $interval3 = Time::diffOrNull($this->hours['hour5'],$this->hours['hour6']);
+
+        $interval4 = Time::diffOrNull($this->hours['hour7'],$this->hours['hour8']);
+
+    	return Time::sumDateTime($interval1,$interval2,$interval3,$interval4);
     }
 
     public function overtime(){
@@ -114,6 +123,15 @@ class CardCalculator{
     /**
     * Dividindo extras em partes para depois unir no overtime()
     */
+    public function overdueHour1(){
+
+        if($this->hours['hour2'] > $this->toleranceLess($this->schedules->getHour2())){
+
+            $interval = Time::diffValueOrNull($this->hours['hour1'],$this->schedules->getHour1());
+
+            return $interval;
+        }
+    }
 
     public function overdueHour2(){
 
