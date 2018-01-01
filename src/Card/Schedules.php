@@ -6,11 +6,7 @@ use \DateTime;
 
 class Schedules {
 
-	private $date;
-	private $hour1;
-	private $hour2;
-	private $hour3;
-	private $hour4;
+	private $data;
 
     public function __construct($date, array $hours){
 
@@ -21,24 +17,14 @@ class Schedules {
         $this->hour4 = !empty($hours[3]) ? new DateTime($hours[3]) : null;
     }
 
-    public function getDate(){
-    	return $this->date;
+    public function __set($prop, $value){
+        $this->data[$prop] = $value;
     }
 
-    public function getHour1(){
-    	return $this->hour1;
+    public function __get($prop){
+        return $this->data[$prop];
     }
 
-    public function getHour2(){
-    	return $this->hour2;
-    }
 
-    public function getHour3(){
-    	return $this->hour3;
-    }
-
-    public function getHour4(){
-    	return $this->hour4;
-    }
 
 }
