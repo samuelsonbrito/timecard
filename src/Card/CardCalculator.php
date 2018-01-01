@@ -12,7 +12,7 @@ class CardCalculator{
 
 	private $schedules;
     private $hoursCount;
-    private $hours;
+    private $data;
 
     public function __construct(array $hours, $tolerance = '00:05:00'){
 
@@ -97,9 +97,9 @@ class CardCalculator{
 
 	public function overtimeHour2(){
 
-    	if($this->hours['hour2'] > ($this->tolerancePlus($this->schedules->getHour2()))){
+    	if($this->hours['hour2'] > ($this->tolerancePlus($this->schedules->hour2))){
 
-    		$interval = Time::diffValueOrNull($this->hours['hour2'],$this->schedules->getHour2());
+    		$interval = Time::diffValueOrNull($this->hours['hour2'],$this->schedules->hour2);
 
     		return $interval;
     	}
