@@ -20,16 +20,24 @@ class CardCalculator{
 
     	$this->tolerance = is_int($tolerance) ? 5 : $tolerance;
 
-        $this->hours['hour1'] = !empty($hours[0]) ? new DateTime($hours[0]) : null;
-        $this->hours['hour2'] = !empty($hours[1]) ? new DateTime($hours[1]) : null;
-        $this->hours['hour3'] = !empty($hours[2]) ? new DateTime($hours[2]) : null;
-        $this->hours['hour4'] = !empty($hours[3]) ? new DateTime($hours[3]) : null;
+        $this->hour1 = !empty($hours[0]) ? new DateTime($hours[0]) : null;
+        $this->hour2 = !empty($hours[1]) ? new DateTime($hours[1]) : null;
+        $this->hour3 = !empty($hours[2]) ? new DateTime($hours[2]) : null;
+        $this->hour4 = !empty($hours[3]) ? new DateTime($hours[3]) : null;
 
-        $this->hours['hour5'] = !empty($hours[4]) ? new DateTime($hours[4]) : null;
-        $this->hours['hour6'] = !empty($hours[5]) ? new DateTime($hours[5]) : null;
-        $this->hours['hour7'] = !empty($hours[6]) ? new DateTime($hours[6]) : null;
-        $this->hours['hour8'] = !empty($hours[7]) ? new DateTime($hours[7]) : null;        
+        $this->hour5 = !empty($hours[4]) ? new DateTime($hours[4]) : null;
+        $this->hour6 = !empty($hours[5]) ? new DateTime($hours[5]) : null;
+        $this->hour7 = !empty($hours[6]) ? new DateTime($hours[6]) : null;
+        $this->hour8 = !empty($hours[7]) ? new DateTime($hours[7]) : null;
 
+    }
+
+    public function __set($prop, $value){
+        $this->data[$prop] = $value;
+    }
+
+    public function __get($prop){
+        return $this->data[$prop];
     }
 
     public function setSchedules($schedules){
@@ -38,13 +46,13 @@ class CardCalculator{
 
     public function worked(){
 
-    	$interval1 = Time::diffOrNull($this->hours['hour1'],$this->hours['hour2']);
+    	$interval1 = Time::diffOrNull($this->hour1,$this->hour2);
 
-    	$interval2 = Time::diffOrNull($this->hours['hour3'],$this->hours['hour4']);
+    	$interval2 = Time::diffOrNull($this->hour3,$this->hour4);
 
-        $interval3 = Time::diffOrNull($this->hours['hour5'],$this->hours['hour6']);
+        $interval3 = Time::diffOrNull($this->hour5,$this->hour6);
 
-        $interval4 = Time::diffOrNull($this->hours['hour7'],$this->hours['hour8']);
+        $interval4 = Time::diffOrNull($this->hour7,$this->hour8);
 
     	return Time::sumDateTime($interval1,$interval2,$interval3,$interval4);
     }
@@ -87,9 +95,9 @@ class CardCalculator{
 
     public function overtimeHour1(){
 
-        if($this->hours['hour1'] < ($this->tolerancePlus($this->schedules->hour1))){
+        if($this->hour1 < ($this->tolerancePlus($this->schedules->hour1))){
 
-            $interval = Time::diffValueOrNull($this->hours['hour1'],$this->schedules->hour1);
+            $interval = Time::diffValueOrNull($this->hour1,$this->schedules->hour1);
 
             return $interval;
         }
@@ -97,9 +105,9 @@ class CardCalculator{
 
 	public function overtimeHour2(){
 
-    	if($this->hours['hour2'] > ($this->tolerancePlus($this->schedules->hour2))){
+    	if($this->hour2 > ($this->tolerancePlus($this->schedules->hour2))){
 
-    		$interval = Time::diffValueOrNull($this->hours['hour2'],$this->schedules->hour2);
+    		$interval = Time::diffValueOrNull($this->hour2,$this->schedules->hour2);
 
     		return $interval;
     	}
@@ -107,9 +115,9 @@ class CardCalculator{
 
     public function overtimeHour4(){
 
-    	if($this->hours['hour4'] > ($this->tolerancePlus($this->schedules->hour4))){
+    	if($this->hour4 > ($this->tolerancePlus($this->schedules->hour4))){
 
-            $interval = Time::diffValueOrNull($this->hours['hour4'],$this->schedules->hour4);
+            $interval = Time::diffValueOrNull($this->hour4,$this->schedules->hour4);
 
     		return $interval;
     	}
@@ -122,7 +130,7 @@ class CardCalculator{
 
     	$hoursInterval = Time::diffValueOrNull($this->schedules->hour2,$this->schedules->hour3);
     	$hoursIntervalTolerance = Time::sub($hoursInterval,$this->tolerance);
-    	$hoursIntervalRegister = Time::diffValueOrNull($this->hours['hour2'],$this->hours['hour3']);
+    	$hoursIntervalRegister = Time::diffValueOrNull($this->hour2,$this->hour3);
 
     	if(strtotime($hoursIntervalRegister) < strtotime($hoursIntervalTolerance)){
     	   return Time::diffHours($hoursIntervalRegister,$hoursInterval);
@@ -135,9 +143,9 @@ class CardCalculator{
     */
     public function overdueHour1(){
 
-        if($this->hours['hour2'] > $this->toleranceLess($this->schedules->hour2)){
+        if($this->hour2 > $this->toleranceLess($this->schedules->hour2)){
 
-            $interval = Time::diffValueOrNull($this->hours['hour1'],$this->schedules->hour1);
+            $interval = Time::diffValueOrNull($this->hour1,$this->schedules->hour1);
 
             return $interval;
         }
@@ -145,9 +153,9 @@ class CardCalculator{
 
     public function overdueHour2(){
 
-        if($this->hours['hour2'] < $this->toleranceLess($this->schedules->hour2)){
+        if($this->hour2 < $this->toleranceLess($this->schedules->hour2)){
 
-            $interval = Time::diffValueOrNull($this->hours['hour2'],$this->schedules->hour2);
+            $interval = Time::diffValueOrNull($this->hour2,$this->schedules->hour2);
 
             return $interval;
         }
@@ -155,9 +163,9 @@ class CardCalculator{
 
     public function overdueHour4(){
 
-        if($this->hours['hour4'] < $this->toleranceLess($this->schedules->hour4)){
+        if($this->hour4 < $this->toleranceLess($this->schedules->hour4)){
 
-            $interval = Time::diffValueOrNull($this->hours['hour4'],$this->schedules->hour4);
+            $interval = Time::diffValueOrNull($this->hour4,$this->schedules->hour4);
 
             return $interval;
         }
@@ -171,7 +179,7 @@ class CardCalculator{
         $hoursInterval = Time::diffValueOrNull($this->schedules->hour2,$this->schedules->hour3);
 
         $hoursIntervalTolerance = Time::sum($hoursInterval,$this->tolerance);
-        $hoursIntervalRegister = Time::diffValueOrNull($this->hours['hour2'],$this->hours['hour3']);
+        $hoursIntervalRegister = Time::diffValueOrNull($this->hour2,$this->hour3);
 
         if(strtotime($hoursIntervalRegister) > strtotime($hoursIntervalTolerance)){
             return Time::diffHours($hoursIntervalRegister,$hoursInterval);
