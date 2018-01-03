@@ -262,7 +262,7 @@ class CardCalculator{
 
     }
 
-    public function overdueInterval2(){
+    public function overdueInterval3(){
 
         $hoursInterval = Time::diffValueOrNull($this->schedules->hour6,$this->schedules->hour7);
 
