@@ -158,6 +158,29 @@ class CardCalculator{
 
     }
 
+    public function overtimeInterval2(){
+
+        $hoursInterval = Time::diffValueOrNull($this->schedules->hour4,$this->schedules->hour5);
+        $hoursIntervalTolerance = Time::sub($hoursInterval,$this->tolerance);
+        $hoursIntervalRegister = Time::diffValueOrNull($this->hour4,$this->hour5);
+
+        if(strtotime($hoursIntervalRegister) < strtotime($hoursIntervalTolerance)){
+           return Time::diffHours($hoursIntervalRegister,$hoursInterval);
+        }
+
+    }
+
+    public function overtimeInterval3(){
+
+        $hoursInterval = Time::diffValueOrNull($this->schedules->hour6,$this->schedules->hour7);
+        $hoursIntervalTolerance = Time::sub($hoursInterval,$this->tolerance);
+        $hoursIntervalRegister = Time::diffValueOrNull($this->hour6,$this->hour7);
+
+        if(strtotime($hoursIntervalRegister) < strtotime($hoursIntervalTolerance)){
+           return Time::diffHours($hoursIntervalRegister,$hoursInterval);
+        }
+
+    }    
     /**
     * Dividindo extras em partes para depois unir no overtime()
     */
