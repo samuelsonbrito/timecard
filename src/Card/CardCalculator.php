@@ -123,6 +123,26 @@ class CardCalculator{
     	}
     }
 
+    public function overtimeHour6(){
+
+        if($this->hour6 > ($this->tolerancePlus($this->schedules->hour6))){
+
+            $interval = Time::diffValueOrNull($this->hour6,$this->schedules->hour6);
+
+            return $interval;
+        }
+    }
+
+    public function overtimeHour8(){
+
+        if($this->hour8 > ($this->tolerancePlus($this->schedules->hour8))){
+
+            $interval = Time::diffValueOrNull($this->hour8,$this->schedules->hour8);
+
+            return $interval;
+        }
+    }    
+
     /**
     * Período de intervalo - coletando extras de cada intervalo de forma dinâmica
     */
