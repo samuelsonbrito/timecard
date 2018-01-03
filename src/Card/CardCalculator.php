@@ -191,6 +191,25 @@ class CardCalculator{
         }
     }
 
+    public function overdueHour6(){
+
+        if($this->hour6 < $this->toleranceLess($this->schedules->hour6)){
+
+            $interval = Time::diffValueOrNull($this->hour6,$this->schedules->hour6);
+
+            return $interval;
+        }
+    }
+
+    public function overdueHour8(){
+
+        if($this->hour8 < $this->toleranceLess($this->schedules->hour8)){
+
+            $interval = Time::diffValueOrNull($this->hour8,$this->schedules->hour8);
+
+            return $interval;
+        }
+    }
     /**
     * Período de intervalo - coletando atrasos de cada intervalo de forma dinâmica
     */
