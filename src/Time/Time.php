@@ -1351,8 +1351,11 @@ class Time {
 
 
         if($hourOne >= $hourLaw22 && $hourOne <= $hourLaw5){
-
-
+            //mantem horario
+        }elseif($hourOne < $hourLaw22){
+            //o horario fica 22
+        }elseif($hourOne > $hourLaw5){
+            //o horario fia 05
         }
 
     }
