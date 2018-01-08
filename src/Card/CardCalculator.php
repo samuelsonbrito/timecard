@@ -87,6 +87,8 @@ class CardCalculator{
 
     public function extraNight(){
 
+        Time::calcExtraNight($this->hour1,$this->hour2);
+
     }
 
     /**

@@ -1342,4 +1342,27 @@ class Time {
         return (!empty($hour1) && !empty($hour2)) ? $hour1->diff($hour2)->format("%H:%I:%S") : null;
     }
 
+    public static function calcExtraNight($hour1, $hour2){
+
+        $hourLaw22 = strtotime(Time::getLaw22($hour1));
+        $hourLaw5 = strtotime(Time::getLaw05($hour1));
+
+        $hourOne = strtotime($hour1->format('Y-m-d H:i'));
+
+
+        if($hourOne >= $hourLaw22 && $hourOne <= $hourLaw5){
+
+
+        }
+
+    }
+
+    public function getLaw22($hour){
+        return $hour->format('Y-m-d 22:00');
+    }
+
+    public function getLaw05($hour){
+        return date('Y-m-d', strtotime($hour->format('Y-m-d') . ' + 1 days')).' 05:00';
+    }
+
 }
