@@ -1344,20 +1344,32 @@ class Time {
 
     public static function calcExtraNight($hour1, $hour2){
 
-        $hourLaw22 = strtotime(Time::getLaw22($hour1));
-        $hourLaw5 = strtotime(Time::getLaw05($hour1));
+        $hour1Law22 = strtotime(Time::getLaw22($hour1));
+        $hour1Law5 = strtotime(Time::getLaw05($hour1));
 
         $hourOne = strtotime($hour1->format('Y-m-d H:i'));
+        $hourTwo = strtotime($hour2->format('Y-m-d H:i'));
 
+        $hourAdc1 = null;
+        $hourAdc2 = null;
 
-        if($hourOne >= $hourLaw22 && $hourOne <= $hourLaw5){
-            //mantem horario
-        }elseif($hourOne < $hourLaw22){
-            //o horario fica 22
-        }elseif($hourOne > $hourLaw5){
-            //o horario fia 05
+        if($hourOne >= $hour1Law22 && $hourOne <= $hour1Law5){
+            $hourAdc1 = $hour1->format('Y-m-d H:i');
+        }elseif($hourOne < $hour1Law22){
+            $hourAdc1 = Time::getLaw22($hour1);
+        }elseif($hourOne > $hour1Law5){
+            $hourAdc1 = Time::getLaw05($hour1);
         }
 
+        if($hourTwo >= $hour1Law22 && $hourTwo <= $hour1Law5){
+            $hourAdc2 = $hour2->format('Y-m-d H:i');
+        }elseif($hourTwo < $hour1Law22){
+            $hourAdc2 = Time::getLaw22($hour1);
+        }elseif($hourTwo > $hour1Law5){
+            $hourAdc2 = Time::getLaw05($hour1);
+        }
+
+        return Time::diffTime2($hourAdc1,$hourAdc2);
     }
 
     public function getLaw22($hour){
