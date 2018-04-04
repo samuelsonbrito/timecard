@@ -1,11 +1,9 @@
-# timecard
+# TimeCard
 
-> Lib PHP para cálculo de horas - Open-Source
+Biblioteca para cálculo de jornadas de trabalho Open-source.
 
-## Build Setup
-
+## Instalação - Composer
 ``` bash
-# install dependencies
+composer require samuelsonbrito/timecard
 composer install
-
 ```
