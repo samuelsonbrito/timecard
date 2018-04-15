@@ -106,6 +106,10 @@ class Time {
         return $interval->format("%H:%I:%S");
     }
 
+    public static function nameDay($date){
+        return date('D', strtotime($date));
+    }
+
     public static function calcNortuno22($data1, $hora2) {
 
         $data2 = null;
