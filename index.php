@@ -42,4 +42,4 @@ echo 'Horas atrasadas: '.$card->overdue();
 echo '<hr>';
 echo $card->extraNight();
 echo '<hr>';
-echo "Dia: ".Time::nameDay("2018-04-15");
+echo "Dia: ".Time::nameDay("18:04:00 2018-04-15");
