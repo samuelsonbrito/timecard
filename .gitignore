@@ -1,3 +1,10 @@
 vendor
 vendor/
 index.php
+/nbproject/private/
+/nbproject/
+nbproject
+nbproject/
+/tests/
+tests
+tests/

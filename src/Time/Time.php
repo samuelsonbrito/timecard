@@ -1330,7 +1330,7 @@ class Time {
             $e->add($interval2);
 
         if($interval3)
-            $e->add($interva3);
+            $e->add($interval3);
 
         if($interval4)
             $e->add($interval4);

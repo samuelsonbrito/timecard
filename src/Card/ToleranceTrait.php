@@ -1,31 +1,43 @@
 <?php
 
 namespace TimeCard\Card;
+
 use TimeCard\Time\Time;
 
 trait ToleranceTrait {
 
-	private $tolerance;
+    private $tolerance;
 
-    private function tolerancePlus($hour){
+    private function tolerancePlus($hour) {
 
-        $tolerance = Time::getMinInt($this->getTolerance());
+        if (is_object($hour)) {
 
-	    $dateTime = clone $hour;
+            $tolerance = Time::getMinInt($this->getTolerance());
 
-        return $dateTime->modify("+{$tolerance} minutes");
+            $dateTime = clone $hour;
+
+            return $dateTime->modify("+{$tolerance} minutes");
+        } else {
+            return null;
+        }
     }
 
-    private function toleranceLess($hour){
+    private function toleranceLess($hour) {
 
-        $tolerance = Time::getMinInt($this->getTolerance());
+        if (is_object($hour)) {
 
-	    $dateTime = clone $hour;
+            $tolerance = Time::getMinInt($this->getTolerance());
 
-        return $dateTime->modify("-{$tolerance} minutes");
+            $dateTime = clone $hour;
+
+            return $dateTime->modify("-{$tolerance} minutes");
+            
+        } else {
+            return null;
+        }
     }
 
-    public function getTolerance(){
+    public function getTolerance() {
         return $this->tolerance;
     }
 

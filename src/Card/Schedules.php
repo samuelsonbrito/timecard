@@ -6,11 +6,11 @@ use \DateTime;
 
 class Schedules {
 
-	private $data;
+    private $data;
 
-    public function __construct($date, array $hours){
+    public function __construct($date, array $hours) {
 
-    	$this->date = !empty($date) ? new DateTime($date) : null;
+        $this->date = !empty($date) ? new DateTime($date) : null;
         $this->hour1 = !empty($hours[0]) ? new DateTime($hours[0]) : null;
         $this->hour2 = !empty($hours[1]) ? new DateTime($hours[1]) : null;
         $this->hour3 = !empty($hours[2]) ? new DateTime($hours[2]) : null;
@@ -22,11 +22,11 @@ class Schedules {
         $this->hour8 = !empty($hours[7]) ? new DateTime($hours[7]) : null;
     }
 
-    public function __set($prop, $value){
+    public function __set($prop, $value) {
         $this->data[$prop] = $value;
     }
 
-    public function __get($prop){
+    public function __get($prop) {
         return $this->data[$prop];
     }
 
